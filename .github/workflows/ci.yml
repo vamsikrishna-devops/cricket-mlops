@@ -13,6 +13,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Debug workspace
+        run: |
+          echo "PWD:"
+          pwd
+          echo "List root:"
+          ls -la
+          echo "Find app folder:"
+          find . -maxdepth 3 -type d -name "app" -print
+          echo "Tree (top 3 levels):"
+          find . -maxdepth 3 -print
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -28,9 +39,10 @@ jobs:
           mkdir -p models
           python src/train.py
 
-      - name: Run tests
+       - name: Run tests
         run: |
-	  export PYTHONPATH=$PYTHONPATH:$(pwd)
+          export PYTHONPATH=$GITHUB_WORKSPACE
+          python -c "import sys; print(sys.path)"
           pytest -q
 
       - name: Docker build
