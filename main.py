@@ -6,6 +6,9 @@ import os
 app = FastAPI(title="Cricket Win Probability API")
 
 
+# -----------------------------
+# Input schema (DEFINE FIRST)
+# -----------------------------
 class MatchInput(BaseModel):
     batting_team: int
     bowling_team: int
@@ -15,10 +18,16 @@ class MatchInput(BaseModel):
     target: int
 
 
+# -----------------------------
+# Model loading
+# -----------------------------
 MODEL_PATH = "models/win_predictor.pkl"
 model = joblib.load(MODEL_PATH) if os.path.exists(MODEL_PATH) else None
 
 
+# -----------------------------
+# Prediction endpoint
+# -----------------------------
 @app.post("/predict")
 def predict_win_probability(data: MatchInput):
 
