@@ -2,17 +2,16 @@ name: CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-  test-and-build:
+  test-and-docker-build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -24,10 +23,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Train model for CI
+        run: |
+          mkdir -p models
+          python src/train.py
+
       - name: Run tests
         run: |
           pytest -q
 
-      - name: Build Docker image
+      - name: Docker build
         run: |
           docker build -t cricket-mlops:ci .
