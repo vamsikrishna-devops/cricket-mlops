@@ -39,7 +39,7 @@ jobs:
           mkdir -p models
           python src/train.py
 
-       - name: Run tests
+      - name: Run tests
         run: |
           export PYTHONPATH=$GITHUB_WORKSPACE
           python -c "import sys; print(sys.path)"
