@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+venv/
+
+# MLflow
+mlruns/
+.mlflow/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Models (recommended: don't commit large binaries)
+models/*.pkl
+
+# Data (optional: keep if it's small demo data)
+# data/
